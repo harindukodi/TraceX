@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="sidenav">
+        <div class="login-main-text">
+            <h3>Cloud Computing - Assignment 2</h3>
+            <h1><b>Login Page</b></h1>
+            <p>s3763840</p>
+        </div>
+    </div>
+    <div ng-app="main_app" ng-controller="controller" class="main">
+        <div class="col-md-6 col-sm-12" style="margin-top: 20%;">
+            <form>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Email</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Email"
+                           ng-model="user_id">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" ng-model="user_password"
+                           placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-success" ng-click="user_login_submit()">Login</button>
+                <div class="alert alert-danger" role="alert" ng-show="invalid_credentials" style="margin-top: 10px">
+                    ID or password is invalid
+                </div>
+                <hr>
+                <!-- <p>Don't have an account!</p>  -->
+                <button class="btn btn-primary btn-block" type="button" id="btn-signup"
+                        ng-click="user_registration_page()"><i class="fas fa-user-plus"></i>
+                    New user? Click to Register
+                </button>
+            </form>
+            {#            <div class="login-form">#}
+            {#                <form action="login" method="post">#}
+            {#                    {% csrf_token %}#}
+            {#                    {{ title }}#}
+            {#                    <input type="submit" value="Submit">#}
+            {#                </form>#}
+            {#            </div>#}
+        </div>
+    </div>
+{% endblock %}
+
+
