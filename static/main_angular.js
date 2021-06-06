@@ -1,7 +1,7 @@
 var workbench = angular.module("main_app", ['ngRoute']);
 
 
-var htpp_tag = 'https';
+var htpp_tag = 'http';
 
 workbench.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
