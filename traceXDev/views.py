@@ -13,6 +13,8 @@ import datetime
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
+from traceXDev.models import test_table_new
+
 
 @csrf_exempt
 def render_index(request):
@@ -20,6 +22,9 @@ def render_index(request):
     # Test = request.session.get('Test')
     # print(Test)
     # args['mytext'] = text
+    print('TEST DB')
+    table_obj = test_table_new.objects.get(name='harindu')
+    print(table_obj)
     return render(request, 'index.html')
 
 
