@@ -25,7 +25,8 @@ def render_index(request):
     print('TEST DB')
     table_obj = test_table_new.objects.get(name='harindu')
     print(table_obj)
-    return render(request, 'index.html', {'test': table_obj})
+    table_obj_name = table_obj.name
+    return render(request, 'index.html', {'test': table_obj_name})
 
 
 @csrf_exempt
