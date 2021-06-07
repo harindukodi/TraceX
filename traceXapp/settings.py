@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'harindu',
         'PASSWORD': 'harindukodituwakku',
-        'HOST': 'aa8unnczbhirke.cbolvjxtjubd.us-east-1.rds.amazonaws.com',
+        'HOST': 'aa1ft0t22fh6m6e.cbolvjxtjubd.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
