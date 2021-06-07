@@ -102,7 +102,7 @@ else:
             'NAME': 'postgres',
             'USER': 'harindu',
             'PASSWORD': 'harindukodituwakku',
-            'HOST': 'aabz1z9xfbitem.cbolvjxtjubd.us-east-1.rds.amazonaws.com',
+            'HOST': 'aa14wgrbiob9l8q.cbolvjxtjubd.us-east-1.rds.amazonaws.com',
             'PORT': '5432',
         }
     }
