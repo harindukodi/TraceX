@@ -31,12 +31,12 @@ def render_index(request):
 
 @csrf_exempt
 def admin_page(request):
-    user_name = request.session.get('user_name')
+    user_id = request.session.get('user_id')
     # request.session['Test'] = 'harindukodi'
     # Test = request.session.get('Test')
     # print(Test)
     # args['mytext'] = text
-    return render(request, 'admin_page.html', {'user_name': user_name})
+    return render(request, 'admin_page.html', {'user_id': user_id})
 
 
 @csrf_exempt
@@ -58,32 +58,18 @@ def user_login_submit(request):
     user_id = data_json['user_id']
     user_password = data_json['user_password']
 
-    session = boto3.Session(
-        aws_access_key_id='AKIAZ5SN7YW33BSZ2MML',
-        aws_secret_access_key='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',
-        region_name='us-east-1')
-    dynamodb_client = session.client('dynamodb')
+    admin_email = 'harindukodi@outlook.com'
+    admin_password = '1234'
 
     try:
-        table_data = dynamodb_client.get_item(TableName='login', Key={'email': {"S": str(user_id)}})
-        print(table_data)
-        data = table_data['Item']
-        print(data)
+        if user_id == admin_email and user_password == admin_password:
+            print('Admin login Success')
 
-        if str(data['email'].get('S')) == str(data['email'].get('S')) and str(data['password'].get('S')) == str(
-                user_password):
-            print('Login Success')
-
-            if str(data['status'].get('S')) == "admin":
-                login_response = 'admin'
-            else:
-                login_response = 'success'
-
+            login_response = 'admin'
             request.session['user_id'] = user_id
-            request.session['user_name'] = data['user_name'].get('S')
         else:
-            print('Invalid credentials')
-            login_response = 'invalid'
+            login_response = 'success'
+            request.session['user_id'] = user_id
     except Exception as e:
         login_response = 'invalid'
         print('exception')
@@ -92,6 +78,7 @@ def user_login_submit(request):
     print(login_response)
 
     return JsonResponse(login_response, safe=False)
+
 
 @csrf_exempt
 def create_music_table(request):
@@ -138,6 +125,7 @@ def create_music_table(request):
 
     return JsonResponse(table_creation_response, safe=False)
 
+
 @csrf_exempt
 def load_music_data(request):
     load_music_data_response = ''
@@ -178,6 +166,7 @@ def load_music_data(request):
         print(e)
 
     return JsonResponse(load_music_data_response, safe=False)
+
 
 @csrf_exempt
 def download_artist_images(request):
@@ -230,13 +219,15 @@ def download_artist_images(request):
 
     return JsonResponse(download_artist_images_response, safe=False)
 
+
 @csrf_exempt
 def forum_page(request):
-    user_name = request.session.get('user_name')
-    print(user_name)
+    user_id = request.session.get('user_id')
+    print(user_id)
 
     return render(request, 'forum.html',
-                  {'user_name': user_name})
+                  {'user_id': user_id})
+
 
 @csrf_exempt
 def create_bucket(bucket_name, region=None):
@@ -269,6 +260,7 @@ def create_bucket(bucket_name, region=None):
         logging.error(e)
         return False
     return True
+
 
 @csrf_exempt
 def registration_page(request):
@@ -316,6 +308,7 @@ def register_user(request):
 
     return JsonResponse(register_response, safe=False)
 
+
 @csrf_exempt
 def get_subscription_data(request):
     send_data = ''
@@ -355,6 +348,7 @@ def get_subscription_data(request):
 
     return JsonResponse(send_data, safe=False)
 
+
 @csrf_exempt
 def remove_subscription_item(request):
     user_id = request.session.get('user_id')
@@ -374,6 +368,7 @@ def remove_subscription_item(request):
     print(table_data)
 
     return JsonResponse('done', safe=False)
+
 
 @csrf_exempt
 def submit_query(request):
@@ -467,6 +462,7 @@ def submit_query(request):
         send_data = 'no_data'
 
     return JsonResponse(send_data, safe=False)
+
 
 @csrf_exempt
 def subscribe_item(request):

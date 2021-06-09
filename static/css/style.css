@@ -2,7 +2,7 @@ body {
     font-family: "Lato", sans-serif;
 }
 
-.main-head{
+.main-head {
     height: 150px;
     background: #FFF;
 
@@ -10,7 +10,8 @@ body {
 
 .sidenav {
     height: 100%;
-    background-color: #000;
+    background: linear-gradient(to right, #11998e, #38ef7d);
+    /*background-color: #000;*/
     overflow-x: hidden;
     padding-top: 20px;
 }
@@ -21,25 +22,27 @@ body {
 }
 
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
+    .sidenav {
+        padding-top: 15px;
+    }
 }
 
 @media screen and (max-width: 450px) {
-    .login-form{
+    .login-form {
         margin-top: 10%;
     }
 
-    .register-form{
+    .register-form {
         margin-top: 10%;
     }
 }
 
-@media screen and (min-width: 768px){
-    .main{
+@media screen and (min-width: 768px) {
+    .main {
         margin-left: 40%;
     }
 
-    .sidenav{
+    .sidenav {
         width: 40%;
         position: fixed;
         z-index: 1;
@@ -47,27 +50,81 @@ body {
         left: 0;
     }
 
-    .login-form{
+    .login-form {
         margin-top: 80%;
     }
 
-    .register-form{
+    .register-form {
         margin-top: 20%;
     }
 }
 
 
-.login-main-text{
-    margin-top: 20%;
-    padding: 60px;
+.login-main-text {
+    margin-top: 45%;
+    /*padding: 60px;*/
     color: #fff;
 }
 
-.login-main-text h2{
+.login-main-text h2 {
     font-weight: 300;
 }
 
-.btn-black{
+.btn-black {
     background-color: #000 !important;
     color: #fff;
 }
+
+.tag-line {
+    font-family: 'Kanit', sans-serif;
+}
+
+
+.btn-grad {
+    background-image: linear-gradient(to right, #02AAB0 0%, #00CDAC 51%, #02AAB0 100%)
+}
+
+.btn-grad {
+    /*margin: 10px;*/
+    padding: 15px 45px;
+    text-align: center;
+    /*text-transform: uppercase;*/
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 25px;
+    display: block;
+}
+
+.btn-grad:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.btn-grad-login {
+    background-image: linear-gradient(to right, #134E5E 0%, #71B280 51%, #134E5E 100%)
+}
+
+.btn-grad-login {
+    margin: 10px;
+    padding: 15px 70px 15px 70px;
+    text-align: center;
+    /*text-transform: uppercase;*/
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 25px;
+    display: block;
+    font-weight: bold;
+}
+
+.btn-grad-login:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+

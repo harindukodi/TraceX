@@ -143,7 +143,7 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         })
     }
 
-    $scope.get_subscription_data()
+    // $scope.get_subscription_data()
 
     $scope.remove_subscription_item = function (id) {
         console.log(id)

@@ -4,10 +4,12 @@
 
 {% block content %}
     <div class="sidenav">
-        <div class="login-main-text">
-            <h3>Cloud Computing - Assignment 2</h3>
-            <h1><b>Login Page {{ test }}</b></h1>
-            <p>s3763840</p>
+        <div class="login-main-text d-flex justify-content-center">
+            {#            <h3>Cloud Computing - Assignment 2</h3>#}
+            <h1 style="font-size: 6rem"><b>TraceX</b></h1>
+        </div>
+        <div class="d-flex justify-content-center">
+            <p class="tag-line" style="font-size: 1.2rem; color: white">Help stop the spread and save lives.</p>
         </div>
     </div>
     <div ng-app="main_app" ng-controller="controller" class="main">
@@ -23,16 +25,22 @@
                     <input type="password" class="form-control" id="exampleInputPassword1" ng-model="user_password"
                            placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-success" ng-click="user_login_submit()">Login</button>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-grad-login" ng-click="user_login_submit()">Login</button>
+                </div>
+
                 <div class="alert alert-danger" role="alert" ng-show="invalid_credentials" style="margin-top: 10px">
                     ID or password is invalid
                 </div>
                 <hr>
-                <!-- <p>Don't have an account!</p>  -->
-                <button class="btn btn-primary btn-block" type="button" id="btn-signup"
-                        ng-click="user_registration_page()"><i class="fas fa-user-plus"></i>
-                    New user? Click to Register
-                </button>
+                <div class="mt-0 mt-md-5">
+                    <!-- <p>Don't have an account!</p>  -->
+                    <button class="btn btn-grad btn-block" type="button" id="btn-signup"
+                            ng-click="user_registration_page()"><i class="fas fa-user-plus"></i>
+                        New user? Click to Register
+                    </button>
+                </div>
+
             </form>
             {#            <div class="login-form">#}
             {#                <form action="login" method="post">#}

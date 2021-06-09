@@ -16,9 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from traceXDev.views import render_index
+from traceXDev.views import render_index, registration_page, user_login_submit, admin_page, forum_page
 
 urlpatterns = [
     path('', render_index),
+    path('registration_page', registration_page),
+    path('user_login_submit', user_login_submit),
+    path('admin_page', admin_page),
+    path('forum_page', forum_page),
+    path('login_page', render_index),
     path('admin/', admin.site.urls),
 ]
