@@ -1,7 +1,7 @@
 var workbench = angular.module("main_app", ['ngRoute']);
 
 
-var htpp_tag = 'https';
+var htpp_tag = 'http';
 
 workbench.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -143,7 +143,7 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         })
     }
 
-    $scope.get_subscription_data()
+    // $scope.get_subscription_data()
 
     $scope.remove_subscription_item = function (id) {
         console.log(id)
