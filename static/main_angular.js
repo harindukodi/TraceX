@@ -263,6 +263,27 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         location.href = 'login_page'
     }
 
+    $scope.admin_dashboard = function () {
+        console.log('admin_dashboard')
+        location.href = 'admin_page'
+    }
+
+    $scope.admin_add_commute = function () {
+        console.log('admin_add_commute')
+        location.href = 'admin_add_commute_page'
+    }
+
+    $scope.admin_view_all_commutes = function () {
+        console.log('admin_view_all_commutes')
+        location.href = 'admin_view_all_commutes_page'
+    }
+
+    $scope.admin_search_commutes = function () {
+        console.log('admin_search_commutes')
+        location.href = 'admin_search_commutes_page'
+    }
+
+
     $scope.register_user = function () {
         console.log($scope.reg_user_id)
         console.log($scope.reg_username)

@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from traceXDev.views import render_index, registration_page, user_login_submit, admin_page, forum_page
+from traceXDev.views import render_index, registration_page, user_login_submit, admin_page, forum_page, \
+    admin_add_commute_page, admin_view_all_commutes_page, admin_search_commutes_page
 
 urlpatterns = [
     path('', render_index),
@@ -25,5 +26,9 @@ urlpatterns = [
     path('admin_page', admin_page),
     path('forum_page', forum_page),
     path('login_page', render_index),
+    path('admin_add_commute_page', admin_add_commute_page),
+    path('admin_view_all_commutes_page', admin_view_all_commutes_page),
+    path('admin_search_commutes_page', admin_search_commutes_page),
+
     path('admin/', admin.site.urls),
 ]

@@ -36,7 +36,37 @@ def admin_page(request):
     # Test = request.session.get('Test')
     # print(Test)
     # args['mytext'] = text
-    return render(request, 'admin_page.html', {'user_id': user_id})
+    return render(request, 'administrator.html', {'user_id': user_id})
+
+
+@csrf_exempt
+def admin_add_commute_page(request):
+    user_id = request.session.get('user_id')
+    # request.session['Test'] = 'harindukodi'
+    # Test = request.session.get('Test')
+    # print(Test)
+    # args['mytext'] = text
+    return render(request, 'admin_add_commute.html', {'user_id': user_id})
+
+
+@csrf_exempt
+def admin_view_all_commutes_page(request):
+    user_id = request.session.get('user_id')
+    # request.session['Test'] = 'harindukodi'
+    # Test = request.session.get('Test')
+    # print(Test)
+    # args['mytext'] = text
+    return render(request, 'admin_view_all_commutes.html', {'user_id': user_id})
+
+
+@csrf_exempt
+def admin_search_commutes_page(request):
+    user_id = request.session.get('user_id')
+    # request.session['Test'] = 'harindukodi'
+    # Test = request.session.get('Test')
+    # print(Test)
+    # args['mytext'] = text
+    return render(request, 'admin_search_commutes.html', {'user_id': user_id})
 
 
 @csrf_exempt

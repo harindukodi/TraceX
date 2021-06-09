@@ -61,9 +61,16 @@ body {
 
 
 .login-main-text {
+    font-family: Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     margin-top: 45%;
     /*padding: 60px;*/
     color: #fff;
+}
+
+.custom-sidebar-brand-text {
+    font-family: Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+    font-size: 1.7rem !important;
+
 }
 
 .login-main-text h2 {
@@ -127,4 +134,29 @@ body {
     color: #fff;
     text-decoration: none;
 }
+
+
+.btn-grad-search {
+    background-image: linear-gradient(to right, #1e3c72 0%, #2a5298  51%, #1e3c72  100%)
+}
+
+.btn-grad-search {
+    /*margin: 10px;*/
+    /*padding: 15px 45px;*/
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.btn-grad-search:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
 
