@@ -13,6 +13,7 @@ import datetime
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
+from commute.models import commute_table
 from traceXDev.models import test_table_new
 
 
@@ -111,49 +112,36 @@ def user_login_submit(request):
 
 
 @csrf_exempt
-def create_music_table(request):
-    table_creation_response = ''
+def add_commute(request):
+    print('add_commute method')
+    commute_table_creation_response = ''
+    data_json = json.loads(request.body)
+    new_commute_type = data_json['new_commute_type']
+    new_commute_name = data_json['new_commute_name']
+    new_commute_month = data_json['new_commute_month']
+    new_commute_day = data_json['new_commute_day']
+    new_commute_year = data_json['new_commute_year']
+    new_commute_hour = data_json['new_commute_hour']
+    new_commute_minute = data_json['new_commute_minute']
+    new_commute_ampm = data_json['new_commute_ampm']
+    new_commute_alert = data_json['new_commute_alert']
 
-    session = boto3.Session(
-        aws_access_key_id='AKIAZ5SN7YW33BSZ2MML',
-        aws_secret_access_key='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',
-        region_name='us-east-1')
-    dynamodb_client = session.client('dynamodb')
+    commute_table_obj = commute_table(
+        commute_type=str(new_commute_type), commute_name=str(new_commute_name),
+        commute_month=str(new_commute_month),
+        commute_day=str(new_commute_day),
+        commute_year=str(new_commute_year),
+        commute_hour=str(new_commute_hour),
+        commute_minutes=str(new_commute_minute),
+        commute_ampm=str(new_commute_ampm),
+        commute_alert=str(new_commute_alert),
+        commute_passenger_count=str(0),
+    )
+    commute_table_obj.save()
+    commute_table_creation_response = 'success'
+    print(commute_table_creation_response)
 
-    try:
-        table = dynamodb_client.create_table(TableName='music', KeySchema=[
-            {
-                'AttributeName': 'artist',
-                'KeyType': 'HASH'  # Partition key
-            },
-            {
-                'AttributeName': 'title',
-                'KeyType': 'RANGE'  # Sort key
-            }
-        ], AttributeDefinitions=[
-            {
-                'AttributeName': 'artist',
-                'AttributeType': 'S'
-            },
-            {
-                'AttributeName': 'title',
-                'AttributeType': 'S'
-            },
-        ], ProvisionedThroughput={
-            'ReadCapacityUnits': 10,
-            'WriteCapacityUnits': 10
-        }
-                                             )
-
-        print(table)
-        table_creation_response = 'success'
-
-    except Exception as e:
-        table_creation_response = 'error'
-        print('create_music_table exception')
-        print(e)
-
-    return JsonResponse(table_creation_response, safe=False)
+    return JsonResponse(commute_table_creation_response, safe=False)
 
 
 @csrf_exempt
