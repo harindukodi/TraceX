@@ -222,9 +222,9 @@
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-{#                            <h1 class="h3 mb-0 text-gray-800">View Commutes</h1>#}
-{#                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
-{#                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>#}
+                            {#                            <h1 class="h3 mb-0 text-gray-800">View Commutes</h1>#}
+                            {#                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+                            {#                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>#}
                         </div>
 
                         <!-- Content Row -->
@@ -254,34 +254,78 @@
                                     </div>
                                     <!-- Card Body -->
                                     {%verbatim%}
-                                    <div class="card-body">
+                                    <div class="card-body" style="padding: 0">
                                         <div class="row">
                                             <div class="col-12">
-                                                <table class="table table-striped table-bordered table-hover dom-jQuery-events" ng-cloak
-                                                       ng-show="query_result_table">
-                                                    <thead class="thead-dark">
-                                                    <tr>
-                                                        <th>Title</th>
-                                                        <th>Artist</th>
-                                                        <th>Year</th>
-                                                        <th>Artist Image</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tr ng-repeat="data in queried_data track by $index">
-                                                        <td>{{data['title']}}</td>
-                                                        <td>{{data['artist']}}</td>
-                                                        <td>{{data['year']}}</td>
-                                                        <td><img style="width: 150px" ng-src="{{data['artist_image']}}">
-                                                        </td>
-                                                        <td>
-                                                            <button class="btn btn-success"
-                                                                    ng-click="subscribe_item($index)">
-                                                                Subscribe
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-dark table-bordered table-hover dom-jQuery-events"
+                                                           ng-cloak style="text-align: center;"
+                                                           ng-show="query_result_table">
+                                                        <thead class="thead-dark">
+                                                        <tr>
+                                                            <th>Commute Type</th>
+                                                            <th>Commute Name</th>
+                                                            <th>Year</th>
+                                                            <th>Month</th>
+                                                            <th>Day</th>
+                                                            <th>Hour</th>
+                                                            <th>Minute</th>
+                                                            <th>AM/PM</th>
+                                                            <th>Alert Status</th>
+                                                            <th>Passenger Count</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tr ng-repeat="data in all_commute_data track by $index">
+                                                            <td ng-if="data['commute_type'] == 'Train'">
+                                                                <h5><span class="badge badge-pill badge-primary"
+                                                                          style="padding: 7px 25px;">{{data['commute_type']}}</span>
+                                                                </h5>
+                                                            </td>
+                                                            <td ng-if="data['commute_type'] == 'Tram'">
+                                                                <h5><span class="badge badge-pill badge-warning"
+                                                                          style="padding: 7px 25px;">{{data['commute_type']}}</span>
+                                                                </h5>
+                                                            </td>
+                                                            <td ng-if="data['commute_type'] == 'Bus'">
+                                                                <h5><span class="badge badge-pill badge-info"
+                                                                          style="padding: 7px 25px;">{{data['commute_type']}}</span>
+                                                                </h5>
+                                                            </td>
+                                                            <td>{{data['commute_name']}}</td>
+                                                            <td>{{data['commute_year']}}</td>
+                                                            <td>{{data['commute_month']}}</td>
+                                                            <td>{{data['commute_day']}}</td>
+                                                            <td>{{data['commute_hour']}}</td>
+                                                            <td>{{data['commute_minutes']}}</td>
+                                                            <td>{{data['commute_ampm']}}</td>
+                                                            <td ng-if="data['commute_alert'] == 'No'">
+                                                                <h5><span class="badge badge-pill badge-success"
+                                                                          style="padding: 7px 25px;">Safe</span></h5>
+                                                            </td>
+                                                            <td ng-if="data['commute_alert'] == 'Yes'">
+                                                                <h5><span class="badge badge-pill badge-danger"
+                                                                          style="padding: 7px 16px;">Unsafe</span></h5>
+                                                            </td>
+                                                            <td>{{data['commute_passenger_count']}}</td>
+
+                                                            <td ng-if="data['commute_alert'] == 'No'">
+                                                                <button class="btn btn-danger"
+                                                                        style="padding: 5px 16px 5px 16px; border-radius: 20px"
+                                                                        ng-click="subscribe_item($index)">
+                                                                    Mark Unsafe
+                                                                </button>
+                                                            </td>
+                                                            <td ng-if="data['commute_alert'] === 'Yes'">
+                                                                <button class="btn btn-success"
+                                                                        style="padding: 5px 25px 5px 25px; border-radius: 20px"
+                                                                        ng-click="subscribe_item($index)">
+                                                                    Mark Safe
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                                 <div class="alert alert-danger" role="alert" ng-cloak
                                                      ng-show="query_result_empty_message"
                                                      style="margin-top: 10px">

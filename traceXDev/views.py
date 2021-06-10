@@ -2,6 +2,7 @@ from boto3.dynamodb.conditions import Key
 from django.http import JsonResponse
 from django.shortcuts import render
 import json
+import pandas as pd
 import datetime
 import os
 import logging
@@ -149,10 +150,12 @@ def get_all_commute_data(request):
     load_music_data_response = ''
 
     commute_objects = commute_table.objects.all().values()
-    # df = pd.DataFrame(commute_objects)
-    # print(df)
-
-    return JsonResponse(load_music_data_response, safe=False)
+    df = pd.DataFrame(commute_objects)
+    print(df)
+    df = df.drop('id', 1)
+    json_converted = df.to_json(orient='records')
+    print(json_converted)
+    return JsonResponse(json_converted, safe=False)
 
 
 @csrf_exempt

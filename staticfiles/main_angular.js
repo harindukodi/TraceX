@@ -333,7 +333,11 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
 
     $scope.admin_view_all_commutes = function () {
         console.log('admin_view_all_commutes')
+        location.href = 'admin_view_all_commutes_page'
+    }
 
+    $scope.get_all_commute_data = function () {
+        console.log('get_all_commute_data')
         $http({
             method: 'POST',
             url: url + '/get_all_commute_data',
@@ -345,12 +349,14 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
                 console.log(data)
             } else {
                 var parsed_data = JSON.parse(data)
-                $scope.subscription_data = parsed_data
+                $scope.all_commute_data = parsed_data
                 console.log(parsed_data)
-                location.href = 'admin_view_all_commutes_page'
+                $scope.query_result_table = true
             }
         })
     }
+
+    $scope.get_all_commute_data()
 
     $scope.admin_search_commutes = function () {
         console.log('admin_search_commutes')
