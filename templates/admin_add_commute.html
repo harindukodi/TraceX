@@ -225,9 +225,9 @@
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Add Commute</h1>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                            {#                            <h1 class="h3 mb-0 text-gray-800">Add Commute</h1>#}
+                            {#                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+                            {#                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>#}
                         </div>
 
                         <!-- Content Row -->
@@ -239,7 +239,7 @@
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Add Commute Data</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Add Commute Details</h6>
                                         <div class="dropdown no-arrow">
                                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -256,63 +256,112 @@
                                         </div>
                                     </div>
                                     <!-- Card Body -->
-                                    <div class="card-body">
+                                    <div class="card-body" ng-cloak>
                                         <div class="row">
                                             <div class="col-6">
                                                 <form>
                                                     <div class="form-group">
-                                                        <label for="formGroupExampleInput">Title</label>
-                                                        <input type="text" class="form-control"
-                                                               id="formGroupExampleInput"
-                                                               placeholder="eg. Love Story"
-                                                               ng-model="message_title">
+                                                        <label for="formGroupExampleInput">Commute Type</label>
+                                                        <select class="form-control" style="margin-right: 10px;"
+                                                                aria-label=".form-select-sm example"
+                                                                ng-options="x for x in commute_type_list"
+                                                                ng-model="new_commute_type">
+                                                        </select>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="formGroupExampleInput2">Month</label>
+                                                                <select class="form-control" style="margin-right: 10px;"
+                                                                        aria-label=".form-select-sm example"
+                                                                        ng-options="x for x in commute_month_list"
+                                                                        ng-model="new_commute_month">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="formGroupExampleInput2">Day</label>
+                                                                <select class="form-control" style="margin-right: 10px;"
+                                                                        aria-label=".form-select-sm example"
+                                                                        ng-options="x for x in commute_day_list"
+                                                                        ng-model="new_commute_day">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="formGroupExampleInput2">Year</label>
+                                                                <select class="form-control" style="margin-right: 10px;"
+                                                                        aria-label=".form-select-sm example"
+                                                                        ng-options="x for x in commute_year_list"
+                                                                        ng-model="new_commute_year">
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="formGroupExampleInput2">Year</label>
-                                                        <input type="text" class="form-control"
-                                                               id="formGroupExampleInput2"
-                                                               ng-model="message_year"
-                                                               placeholder="eg. 2005">
+                                                        <label for="formGroupExampleInput2">Subject to Alert</label>
+                                                        <select class="form-control" style="margin-right: 10px;"
+                                                                aria-label=".form-select-sm example"
+                                                                ng-options="x for x in commute_alert_list"
+                                                                ng-model="new_commute_alert">
+                                                        </select>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="formGroupExampleInput2">Artist</label>
-                                                        <input type="text" class="form-control"
-                                                               id="formGroupExampleInput2"
-                                                               ng-model="message_artist"
-                                                               placeholder="eg. Ricky Nelson">
+                                                    <div class="col-4" style="padding-left: 0">
+                                                        <button type="submit" class="btn btn-success btn-block"
+                                                                style="margin-top: 45px"
+                                                                ng-click="add_commute()">
+                                                            Add Commute
+                                                        </button>
                                                     </div>
-                                                    <button type="submit" class="btn btn-success"
-                                                            ng-click="submit_query()">
-                                                        Query
-                                                    </button>
                                                 </form>
                                                 <div class="alert alert-success" role="alert" ng-show="success_post"
                                                      style="margin-top: 10px">
-                                                    Posted successfully!
+                                                    Commute added successfully!
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <form>
                                                     <div class="form-group">
-                                                        <label for="formGroupExampleInput">Title</label>
-                                                        <input type="text" class="form-control"
-                                                               id="formGroupExampleInput"
-                                                               placeholder="eg. Love Story"
-                                                               ng-model="message_title">
+                                                        <label for="formGroupExampleInput">Commute Name</label>
+                                                        <select class="form-control" style="margin-right: 10px;"
+                                                                aria-label=".form-select-sm example"
+                                                                ng-options="x for x in commute_name_list"
+                                                                ng-model="new_commute_name">
+                                                        </select>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="formGroupExampleInput2">Year</label>
-                                                        <input type="text" class="form-control"
-                                                               id="formGroupExampleInput2"
-                                                               ng-model="message_year"
-                                                               placeholder="eg. 2005">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="formGroupExampleInput2">Artist</label>
-                                                        <input type="text" class="form-control"
-                                                               id="formGroupExampleInput2"
-                                                               ng-model="message_artist"
-                                                               placeholder="eg. Ricky Nelson">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="formGroupExampleInput2">Hour</label>
+                                                                <select class="form-control" style="margin-right: 10px;"
+                                                                        aria-label=".form-select-sm example"
+                                                                        ng-options="x for x in commute_hour_list"
+                                                                        ng-model="new_commute_hour">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="formGroupExampleInput2">Minute</label>
+                                                                <select class="form-control" style="margin-right: 10px;"
+                                                                        aria-label=".form-select-sm example"
+                                                                        ng-options="x for x in commute_minutes_list"
+                                                                        ng-model="new_commute_minute">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="formGroupExampleInput2">AM / PM</label>
+                                                                <select class="form-control" style="margin-right: 10px;"
+                                                                        aria-label=".form-select-sm example"
+                                                                        ng-options="x for x in commute_ampm_list"
+                                                                        ng-model="new_commute_ampm">
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </form>
                                             </div>

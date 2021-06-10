@@ -2,6 +2,10 @@ body {
     font-family: "Lato", sans-serif;
 }
 
+[ng-cloak] {
+    display: none !important;
+}
+
 .main-head {
     height: 150px;
     background: #FFF;
@@ -137,7 +141,7 @@ body {
 
 
 .btn-grad-search {
-    background-image: linear-gradient(to right, #1e3c72 0%, #2a5298  51%, #1e3c72  100%)
+    background-image: linear-gradient(to right, #1e3c72 0%, #2a5298 51%, #1e3c72 100%)
 }
 
 .btn-grad-search {
@@ -159,4 +163,11 @@ body {
     text-decoration: none;
 }
 
+label {
+    font-weight: 600 !important;
+    color: #505050 !important;
+}
 
+.text-primary {
+    color: #284e91 !important;
+}
