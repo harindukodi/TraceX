@@ -120,7 +120,9 @@ body {
 }
 
 .btn-grad-login {
-    margin: 10px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 15px 70px 15px 70px;
     text-align: center;
     /*text-transform: uppercase;*/

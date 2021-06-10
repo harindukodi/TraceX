@@ -145,43 +145,12 @@ def add_commute(request):
 
 
 @csrf_exempt
-def load_music_data(request):
+def get_all_commute_data(request):
     load_music_data_response = ''
 
-    session = boto3.Session(
-        aws_access_key_id='AKIAZ5SN7YW33BSZ2MML',
-        aws_secret_access_key='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',
-        region_name='us-east-1')
-    dynamodb_client = session.client('dynamodb')
-
-    try:
-        file_path = 'media/a2.json'
-        with open(file_path) as json_file:
-            song_list = json.load(json_file)
-
-    except Exception as e:
-        print('Exception in loading JSON')
-        print(e)
-
-    try:
-        for song in song_list['songs']:
-            dynamodb_client.put_item(TableName='music', Item={
-                "title": {"S": song['title']},
-                "artist": {"S": song['artist']},
-                "year": {"N": song['year']},
-                "web_url": {"S": song['web_url']},
-                "img_url": {"S": song['img_url']}
-            })
-            title = song['title']
-            artist = song['artist']
-            print("Adding song: ", title, artist)
-
-        load_music_data_response = 'success'
-
-    except Exception as e:
-        load_music_data_response = 'error'
-        print('create_music_table exception')
-        print(e)
+    commute_objects = commute_table.objects.all().values()
+    # df = pd.DataFrame(commute_objects)
+    # print(df)
 
     return JsonResponse(load_music_data_response, safe=False)
 

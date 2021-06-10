@@ -333,7 +333,23 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
 
     $scope.admin_view_all_commutes = function () {
         console.log('admin_view_all_commutes')
-        location.href = 'admin_view_all_commutes_page'
+
+        $http({
+            method: 'POST',
+            url: url + '/get_all_commute_data',
+        }).then(function mySuccess(response) {
+            console.log(response.data)
+            var data = response.data
+
+            if (data == 'no_data') {
+                console.log(data)
+            } else {
+                var parsed_data = JSON.parse(data)
+                $scope.subscription_data = parsed_data
+                console.log(parsed_data)
+                location.href = 'admin_view_all_commutes_page'
+            }
+        })
     }
 
     $scope.admin_search_commutes = function () {
