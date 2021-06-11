@@ -66,13 +66,16 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         console.log($scope.new_commute_type)
 
         if ($scope.new_commute_type === 'Train') {
-            $scope.commute_name_list = ['Frankston line', 'Pakenham line']
+            $scope.commute_name_list = ['Frankston line', 'Pakenham line', 'Sandringham line', 'Cranbourne line', 'Upfield line', 'Werribee line', 'Craigieburn line', 'Sunbury line', 'Williamstown line', 'Flemington Racecourse line', 'Lilydale line', 'Glen Waverley line', 'Belgrave line', 'Alamein line', 'Mernda line', 'Hurstbridge line', 'Stony Point line', 'Melton line', 'Deer Park–West Werribee line']
+            // ['Frankston line', 'Pakenham line']
             $scope.new_commute_name = $scope.commute_name_list[0]
         } else if ($scope.new_commute_type === 'Tram') {
-            $scope.commute_name_list = ['1 East Coburg']
+            $scope.commute_name_list = ['1 East Coburg - South Melbourne Beach', '3 Melbourne University - East Malvern', '3a Melbourne University - East Malvern', '5 	Melbourne University - Malvern', '5a Orrong & Dandenong Rds - Malvern', '6 Moreland - Glen Iris', '11 West Preston - Victoria Harbour Docklands', '12 Victoria Gardens - St Kilda', '16 Melbourne University - Kew', '19 North Coburg - Flinders Street Station', '30 St Vincents Plaza - Etihad Stadium Docklands', '35 Waterfront City Docklands - Waterfront City Docklands', '48 North Balwyn - Victoria Harbour Docklands', '57 West Maribyrnong - Flinders Street Station', '64 Melbourne University - East Brighton', '67 Melbourne University - Carnegie', '70 Wattle Park, Surrey Hills - Waterfront City Docklands', '72 Melbourne University - Camberwell', '75 Vermont South Shopping Centre - Etihad Stadium Docklands', '78 North Richmond - Balaclava', '82 Footscray - Moonee Ponds', '86 Bundoora RMIT - Waterfront City Docklands', '96 East Brunswick - St Kilda Beach', '109 Box Hill - Port Melbourne']
+            // ['1 East Coburg']
             $scope.new_commute_name = $scope.commute_name_list[0]
         } else if ($scope.new_commute_type === 'Bus') {
-            $scope.commute_name_list = ['200 - City - Bulleen']
+            $scope.commute_name_list = ['200 - City - Bulleen', '201 - City - Warrandyte', '202 - Box Hill - Kew East', '203 - Kew School services', '204 - Kew School Services - Doncaster East (The Pines)', '205 - Kew School Services - Warrandyte', '206 - Kew School Services - Warrandyte', '207 - City - Donvale', '208 - Kew School Services - Doncaster East (The Pines)', '209 - Kew School Services - Fitzroy', '210 - Kew School Services - Doncaster East (The Pines)', '215 - Deer Park West - Maribyrnong (Highpoint City)', '216 - Deer Park West - Brighton or Gardenvale via City and Footscray', '219 - 216 from Sunshine, Victoria', '220 - Sunshine - Gardenvale via Footscray and City', '223 - Yarraville - Maribyrnong (Highpoint City)', '232 - Altona North - Queen Victoria Market', '235 - City - Port Melbourne (Fishermans Bend)', '236 - City - Port Melbourne (Fishermans Bend)', '237 - City - Port Melbourne (Fishermans Bend)', '246 - Elsternwick station - Clifton Hill', '249 - City - Bundoora', '250 - Bundoora (La Trobe University) - Port Melbourne (Garden City)', '251 - Garden City - Preston (Northland)', '253 - Garden City - City', '270 - Box Hill - Ringwood via Blackburn North, Nunawading, Mitcham, Ringwood North', '271 - Box Hill - Nunawading', '273 - Doncaster - Forest Hill', '279 - Box Hill - Templestowe', '280 - Box Hill - Doncaster', '281 - Eltham station - Westfield Doncaster', '282 - Doncaster - Bulleen', '283 - Doncaster - Manningham Club', '284 - Doncaster - Box Hill', '285 - Doncaster - Camberwell', '286 - Box Hill - Doncaster East (The Pines)', '289 - Box Hill - Donvale', '291 - Box Hill - Heidelberg', '293 - Box Hill - Greensborough', '295 - Box Hill - Doncaster East (The Pines)']
+            // ['200 - City - Bulleen']
             $scope.new_commute_name = $scope.commute_name_list[0]
         }
     });
@@ -342,8 +345,10 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
             data: obj
         }).then(function mySuccess(response) {
             console.log(response.data)
-            // $scope.admin_view_all_commutes()
+            var sent_email_count = response.data
+            $scope.sent_email_count = sent_email_count + ' '
             $scope.get_all_commute_data()
+            $('#adminActionModal').modal('show');
             // $scope.get_subscription_data()
             // if (response.data === 'done') {
             //     alert("Song added to the subscriptions!");

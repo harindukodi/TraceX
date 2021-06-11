@@ -164,6 +164,7 @@ def get_all_commute_data(request):
 @csrf_exempt
 def mark_commute_action(request):
     json_converted = ''
+    email_count = ''
     user_email_list = []
 
     data_json = json.loads(request.body)
@@ -232,24 +233,13 @@ def mark_commute_action(request):
                     print(user_obj.user_email)
                     user_email_list.append(user_obj.user_email)
 
-            payload = {'user_email_list': user_email_list}
+            # payload = {'user_email_list': user_email_list}
             # lambda_client = session.client('lambda')
             #
             # response = lambda_client.invoke(FunctionName='TracexSendUserEmail',
             #                                 Payload=json.dumps(payload))
             # payload = (response['Payload'])
             # print(payload)
-
-            url = "https://pnoe7c6ci9.execute-api.ap-southeast-1.amazonaws.com/default/TracexSendUserEmail" \
-                  "?user_email_list=" + str(user_email_list)
-
-            auth = AWS4Auth('AKIAZ5SN7YW33BSZ2MML', 'SixER2DjIxvC0ON7S47fKkHX6XCzH9940zuaoSYI', 'ap-southeast-1',
-                            'execute-api')
-
-            response = requests.post(url, auth=auth)
-            print(response)
-            print(response.text)
-            json_converted = response.text
 
             # auth = AWSRequestsAuth(aws_access_key='AKIAZ5SN7YW33BSZ2MML',
             #                        aws_secret_access_key='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',
@@ -263,9 +253,30 @@ def mark_commute_action(request):
             #
             # print(response.content)
 
+            if len(user_email_list) > 0:
+                url = "https://pnoe7c6ci9.execute-api.ap-southeast-1.amazonaws.com/default/TracexSendUserEmail" \
+                      "?user_email_list=" + str(user_email_list) + "&commute_type=" + \
+                      str(commute_type) + "&commute_name=" + str(commute_name) + "&commute_month=" + \
+                      str(commute_month) + "&commute_day=" + str(commute_day) + "&commute_year=" + \
+                      str(commute_year) + "&commute_hour=" + str(commute_hour) + "&commute_minutes=" + \
+                      str(commute_minutes) + "&commute_ampm=" + str(commute_ampm) + "&action=" + \
+                      str(action)
+
+                auth = AWS4Auth('AKIAZ5SN7YW33BSZ2MML', 'SixER2DjIxvC0ON7S47fKkHX6XCzH9940zuaoSYI', 'ap-southeast-1',
+                                'execute-api')
+
+                response = requests.post(url, auth=auth)
+                print(response)
+                print(response.text)
+                json_converted = response.text
+                email_count = len(user_email_list)
+            else:
+                print('Obj empty')
+                email_count = len(user_email_list)
+
     print(user_email_list)
 
-    return JsonResponse(json_converted, safe=False)
+    return JsonResponse(email_count, safe=False)
 
 
 @csrf_exempt
