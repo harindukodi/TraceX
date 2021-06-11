@@ -417,11 +417,9 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
 
     $scope.register_user = function () {
         console.log($scope.reg_user_id)
-        console.log($scope.reg_username)
         console.log($scope.reg_password)
         var obj = JSON.stringify({
             "reg_user_id": $scope.reg_user_id,
-            "reg_username": $scope.reg_username,
             "reg_password": $scope.reg_password,
         });
         $http({
@@ -435,7 +433,8 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
             } else if (response.data === 'invalid_userid') {
                 $scope.invalid_userid = true
             } else if (response.data === 'valid_user') {
-                location.href = 'login_page'
+                $('#registrationSuccessModal').modal('show');
+                // location.href = 'login_page'
             }
         })
     }

@@ -18,6 +18,7 @@ from requests_aws4auth import AWS4Auth
 # from aws_requests_auth.aws_auth import AWSRequestsAuth
 from commute.models import commute_table
 from traceXDev.models import test_table_new
+from traceXusers.models import user_info_table
 from users.models import user_tracking_table
 
 
@@ -93,18 +94,31 @@ def user_login_submit(request):
     user_id = data_json['user_id']
     user_password = data_json['user_password']
 
-    admin_email = 'harindukodi@outlook.com'
-    admin_password = '1234'
+    # admin_email = 'harindukodi@outlook.com'
+    # admin_password = '1234'
 
     try:
-        if user_id == admin_email and user_password == admin_password:
-            print('Admin login Success')
+        if user_info_table.objects.filter(user_email=str(user_id), user_password=user_password).exists():
+            print('User exists')
+            user_info_table_obj = user_info_table.objects.filter(user_email=str(user_id), user_password=user_password)
 
-            login_response = 'admin'
-            request.session['user_id'] = user_id
+            for user in user_info_table_obj:
+                if user.user_access_level == 'admin':
+                    login_response = 'admin'
+                    request.session['user_id'] = user_id
+                else:
+                    login_response = 'success'
+                    request.session['user_id'] = user_id
         else:
-            login_response = 'success'
-            request.session['user_id'] = user_id
+            login_response = 'invalid'
+        # if user_id == admin_email and user_password == admin_password:
+        #     print('Admin login Success')
+        #
+        #     login_response = 'admin'
+        #     request.session['user_id'] = user_id
+        # else:
+        #     login_response = 'success'
+        #     request.session['user_id'] = user_id
     except Exception as e:
         login_response = 'invalid'
         print('exception')
@@ -381,41 +395,31 @@ def registration_page(request):
 @csrf_exempt
 def register_user(request):
     register_response = ''
-    verified_user = 'no'
     data_json = json.loads(request.body)
     reg_user_id = data_json['reg_user_id']
-    reg_username = data_json['reg_username']
     reg_password = data_json['reg_password']
+    print(reg_user_id)
+    print(reg_password)
 
-    session = boto3.Session(
-        aws_access_key_id='AKIAZ5SN7YW33BSZ2MML',
-        aws_secret_access_key='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',
-        region_name='us-east-1')
-    dynamodb_client = session.client('dynamodb')
-
-    try:
-        table_data = dynamodb_client.get_item(TableName='login', Key={'email': {"S": str(reg_user_id)}})
-        print(table_data)
-        data = table_data['Item']
-        print(data)
-        print(data['email'].get('S'))
-        verified_user = 'no'
+    if user_info_table.objects.filter(user_email=str(reg_user_id)).exists():
+        print('User exists')
         register_response = 'invalid_userid'
-    except Exception as e:
-        verified_user = 'yes'
-        print('exception')
-        print(e)
-
-    if verified_user == 'yes':
-        print('Verified user')
-        response = dynamodb_client.put_item(TableName='login', Item={
-            "email": {"S": str(reg_user_id)},
-            "password": {"S": str(reg_password)},
-            "status": {"S": "user"},
-            "user_name": {"S": str(reg_username)}
-        })
-        print(response)
+    else:
+        print('User does not exist')
+        user_info_table_obj = user_info_table(user_email=reg_user_id, user_password=str(reg_password),
+                                              user_access_level='user')
+        user_info_table_obj.save()
         register_response = 'valid_user'
+
+        url = "https://59pq4rfmoi.execute-api.ap-southeast-1.amazonaws.com/default/TracexNewUserEmail" \
+              "?user_email=" + str(reg_user_id)
+
+        auth = AWS4Auth('AKIAZ5SN7YW33BSZ2MML', 'SixER2DjIxvC0ON7S47fKkHX6XCzH9940zuaoSYI', 'ap-southeast-1',
+                        'execute-api')
+
+        response = requests.post(url, auth=auth)
+        print(response)
+        print(response.text)
 
     return JsonResponse(register_response, safe=False)
 

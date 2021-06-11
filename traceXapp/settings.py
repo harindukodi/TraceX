@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'traceXapp',
     'commute',
     'users',
+    'traceXusers',
 ]
 
 MIDDLEWARE = [

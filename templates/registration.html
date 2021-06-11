@@ -3,69 +3,127 @@
 {% block content %}
 
     <div class="sidenav">
-        <div class="login-main-text">
-            <h3>Cloud Computing - Assignment 2</h3>
-            <h1><b>Registration Page</b></h1>
-            <p>s3763840</p>
+        <div class="login-main-text d-flex justify-content-center">
+            {#            <h3>Cloud Computing - Assignment 2</h3>#}
+            <h1 style="font-size: 6rem"><b>TraceX</b></h1>
+        </div>
+        <div class="d-flex justify-content-center">
+            <p class="tag-line" style="font-size: 1.2rem; color: white">Help stop the spread and save lives.</p>
         </div>
     </div>
-    <div class="main">
-        <h3 style="margin-top: 50px; margin-left: 15px; margin-bottom: 30px">Register</h3>
-        <div ng-app="main_app" ng-controller="controller">
+    <div class="main" style="padding-top: 100px">
+        {#        <h3 style="margin-top: 50px; margin-left: 15px; margin-bottom: 30px">Register</h3>#}
+        <div ng-app="main_app" ng-controller="controller" ng-cloak>
             <div class="col-md-6 col-sm-12">
                 <div class="register-form">
-                    <form class="form-horizontal">
-                        <fieldset>
-                            {#                            <div id="legend">#}
-                            {#                                <legend class="">Register</legend>#}
-                            {#                            </div>#}
-                            <div class="control-group">
-                                <!-- Username -->
-                                <label class="control-label" for="username">Email</label>
-                                <div class="controls">
-                                    <input type="text" id="reg_user_id" name="username" placeholder=""
-                                           class="input-xlarge"
-                                           ng-model="reg_user_id">
-                                </div>
-                                <div class="alert alert-danger" role="alert" ng-show="invalid_userid"
-                                     style="margin-top: 10px">
-                                    The email already exists
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <!-- E-mail -->
-                                <label class="control-label" for="email">Username</label>
-                                <div class="controls">
-                                    <input type="text" id="reg_username" name="username" placeholder=""
-                                           ng-model="reg_username"
-                                           class="input-xlarge">
-                                </div>
-                                <div class="alert alert-danger" role="alert" ng-show="invalid_username"
-                                     style="margin-top: 10px">
-                                    The username already exists
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <!-- Password-->
-                                <label class="control-label" for="password">Password</label>
-                                <div class="controls">
-                                    <input type="password" id="reg_password" name="password" placeholder=""
-                                           ng-model="reg_password"
-                                           class="input-xlarge">
-                                </div>
-                            </div>
-                            <!-- Button -->
-                            <div class="controls" style="margin-top: 20px">
-                                <button class="btn btn-success" ng-click="register_user()">Register</button>
-                            </div>
-                        </fieldset>
+                    <form>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Email</label>
+                            <input type="text" class="form-control" id="reg_user_id" placeholder="Email"
+                                   ng-model="reg_user_id">
+                        </div>
+                        <div class="alert alert-danger" role="alert" ng-show="invalid_userid"
+                             style="margin-top: 10px">
+                            The email already exists
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="reg_password"
+                                   ng-model="reg_password"
+                                   placeholder="Password">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-grad-login" ng-click="register_user()">Register
+                            </button>
+                        </div>
+
+                        <div class="alert alert-danger" role="alert" ng-show="invalid_credentials"
+                             style="margin-top: 10px">
+                            ID or password is invalid
+                        </div>
                         <hr>
-                        <!-- <p>Don't have an account!</p>  -->
-                        <button class="btn btn-primary btn-block" type="button" id="btn-signup"
-                                ng-click="login_page()"><i class="fas fa-user-plus"></i>
-                            Got an account? Click to Login
-                        </button>
+                        <div class="mt-0 mt-md-5">
+                            <!-- <p>Don't have an account!</p>  -->
+                            <button class="btn btn-grad btn-block" type="button" id="btn-signup"
+                                    ng-click="login_page()">
+                                Got an account? Click to Login
+                            </button>
+                        </div>
                     </form>
+                    {#                    <form class="form-horizontal">#}
+                    {#                        <fieldset>#}
+                    {#                            <div class="control-group">#}
+                    {#                                <!-- Username -->#}
+                    {#                                <label class="control-label" for="username">Email</label>#}
+                    {#                                <div class="controls">#}
+                    {#                                    <input type="text" id="reg_user_id" name="username" placeholder=""#}
+                    {#                                           class="input-xlarge"#}
+                    {#                                           ng-model="reg_user_id">#}
+                    {#                                </div>#}
+                    {#                                <div class="alert alert-danger" role="alert" ng-show="invalid_userid"#}
+                    {#                                     style="margin-top: 10px">#}
+                    {#                                    The email already exists#}
+                    {#                                </div>#}
+                    {#                            </div>#}
+                    {#                            <div class="control-group">#}
+                    {#                                <!-- E-mail -->#}
+                    {#                                <label class="control-label" for="email">Username</label>#}
+                    {#                                <div class="controls">#}
+                    {#                                    <input type="text" id="reg_username" name="username" placeholder=""#}
+                    {#                                           ng-model="reg_username"#}
+                    {#                                           class="input-xlarge">#}
+                    {#                                </div>#}
+                    {#                                <div class="alert alert-danger" role="alert" ng-show="invalid_username"#}
+                    {#                                     style="margin-top: 10px">#}
+                    {#                                    The username already exists#}
+                    {#                                </div>#}
+                    {#                            </div>#}
+                    {#                            <div class="control-group">#}
+                    {#                                <!-- Password-->#}
+                    {#                                <label class="control-label" for="password">Password</label>#}
+                    {#                                <div class="controls">#}
+                    {#                                    <input type="password" id="reg_password" name="password" placeholder=""#}
+                    {#                                           ng-model="reg_password"#}
+                    {#                                           class="input-xlarge">#}
+                    {#                                </div>#}
+                    {#                            </div>#}
+                    {#                            <!-- Button -->#}
+                    {#                            <div class="controls" style="margin-top: 20px">#}
+                    {#                                <button class="btn btn-success" ng-click="register_user()">Register</button>#}
+                    {#                            </div>#}
+                    {#                        </fieldset>#}
+                    {#                        <hr>#}
+                    {#                        <!-- <p>Don't have an account!</p>  -->#}
+                    {#                        <button class="btn btn-primary btn-block" type="button" id="btn-signup"#}
+                    {#                                ng-click="login_page()"><i class="fas fa-user-plus"></i>#}
+                    {#                            Got an account? Click to Login#}
+                    {#                        </button>#}
+                    {#                    </form>#}
+                </div>
+            </div>
+            <div class="modal fade" id="registrationSuccessModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Registration Successful!</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        {%verbatim%}
+                        <div class="modal-body">Your registration was successful. Please check your email inbox for the
+                            email address validation which will be used to send you alerts.
+                        </div>
+                        {%endverbatim%}
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="button" ng-click="login_page()" data-dismiss="modal">
+                                Ok
+                            </button>
+                            {#                        <a class="btn btn-primary" href="login.html">Logout</a>#}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
