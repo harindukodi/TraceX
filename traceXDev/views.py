@@ -13,9 +13,12 @@ import datetime
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
-
+# from requests_aws4auth import AWS4Auth
+from requests_aws4auth import AWS4Auth
+# from aws_requests_auth.aws_auth import AWSRequestsAuth
 from commute.models import commute_table
 from traceXDev.models import test_table_new
+from users.models import user_tracking_table
 
 
 @csrf_exempt
@@ -155,6 +158,113 @@ def get_all_commute_data(request):
     df = df.drop('id', 1)
     json_converted = df.to_json(orient='records')
     print(json_converted)
+    return JsonResponse(json_converted, safe=False)
+
+
+@csrf_exempt
+def mark_commute_action(request):
+    json_converted = ''
+    user_email_list = []
+
+    data_json = json.loads(request.body)
+    commute_type = data_json['commute_type']
+    commute_name = data_json['commute_name']
+    commute_year = data_json['commute_year']
+    commute_month = data_json['commute_month']
+    commute_day = data_json['commute_day']
+    commute_hour = data_json['commute_hour']
+    commute_minutes = data_json['commute_minutes']
+    commute_ampm = data_json['commute_ampm']
+    commute_alert = data_json['commute_alert']
+    action = data_json['action']
+
+    print(commute_type)
+    print(commute_year)
+    print(action)
+
+    session = boto3.Session(
+        aws_access_key_id='AKIAZ5SN7YW33BSZ2MML',
+        aws_secret_access_key='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',
+        region_name='ap-southeast-1')
+
+    commute_table_obj = commute_table.objects.filter(
+        commute_type=str(commute_type), commute_name=str(commute_name),
+        commute_month=str(commute_month),
+        commute_day=str(commute_day),
+        commute_year=str(commute_year),
+        commute_hour=str(commute_hour),
+        commute_minutes=str(commute_minutes),
+        commute_ampm=str(commute_ampm),
+        commute_alert=str(commute_alert))
+
+    if not commute_table_obj:
+        print('No matching commute data')
+        response = 'no_data'
+    else:
+        for obj in commute_table_obj:
+            print('Matching record')
+            print(obj.commute_name)
+            commute_table.objects.filter(
+                commute_type=str(commute_type), commute_name=str(commute_name),
+                commute_month=str(commute_month),
+                commute_day=str(commute_day),
+                commute_year=str(commute_year),
+                commute_hour=str(commute_hour),
+                commute_minutes=str(commute_minutes),
+                commute_ampm=str(commute_ampm),
+                commute_alert=str(commute_alert)).update(commute_alert=str(action))
+
+            user_tracking_table_obj = user_tracking_table.objects.filter(
+                commute_type=str(commute_type), commute_name=str(commute_name),
+                commute_month=str(commute_month),
+                commute_day=str(commute_day),
+                commute_year=str(commute_year),
+                commute_hour=str(commute_hour),
+                commute_minutes=str(commute_minutes),
+                commute_ampm=str(commute_ampm))
+
+            if not user_tracking_table_obj:
+                print('No matching user tracking data')
+                response = 'no_data'
+            else:
+                for user_obj in user_tracking_table_obj:
+                    print('Matching user tracking record')
+                    print(user_obj.user_email)
+                    user_email_list.append(user_obj.user_email)
+
+            payload = {'user_email_list': user_email_list}
+            # lambda_client = session.client('lambda')
+            #
+            # response = lambda_client.invoke(FunctionName='TracexSendUserEmail',
+            #                                 Payload=json.dumps(payload))
+            # payload = (response['Payload'])
+            # print(payload)
+
+            url = "https://pnoe7c6ci9.execute-api.ap-southeast-1.amazonaws.com/default/TracexSendUserEmail" \
+                  "?user_email_list=" + str(user_email_list)
+
+            auth = AWS4Auth('AKIAZ5SN7YW33BSZ2MML', 'SixER2DjIxvC0ON7S47fKkHX6XCzH9940zuaoSYI', 'ap-southeast-1',
+                            'execute-api')
+
+            response = requests.post(url, auth=auth)
+            print(response)
+            print(response.text)
+            json_converted = response.text
+
+            # auth = AWSRequestsAuth(aws_access_key='AKIAZ5SN7YW33BSZ2MML',
+            #                        aws_secret_access_key='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',
+            #                        # aws_token=credentials.token,
+            #                        aws_host='pnoe7c6ci9.execute-api.ap-southeast-1.amazonaws.com',
+            #                        aws_region='ap-southeast-1',
+            #                        aws_service='execute-api')
+            #
+            # response = requests.get('https://pnoe7c6ci9.execute-api.ap-southeast-1.amazonaws.com/default'
+            #                         '/TracexSendUserEmail?user_email_list=" + str(user_email_list)', auth=auth)
+            #
+            # print(response.content)
+
+    print(user_email_list)
+
     return JsonResponse(json_converted, safe=False)
 
 

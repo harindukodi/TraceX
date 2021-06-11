@@ -312,14 +312,14 @@
                                                             <td ng-if="data['commute_alert'] == 'No'">
                                                                 <button class="btn btn-danger"
                                                                         style="padding: 5px 16px 5px 16px; border-radius: 20px"
-                                                                        ng-click="subscribe_item($index)">
+                                                                        ng-click="mark_commute_action($index, 'Yes')">
                                                                     Mark Unsafe
                                                                 </button>
                                                             </td>
                                                             <td ng-if="data['commute_alert'] === 'Yes'">
                                                                 <button class="btn btn-success"
                                                                         style="padding: 5px 25px 5px 25px; border-radius: 20px"
-                                                                        ng-click="subscribe_item($index)">
+                                                                        ng-click="mark_commute_action($index, 'No')">
                                                                     Mark Safe
                                                                 </button>
                                                             </td>

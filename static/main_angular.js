@@ -309,6 +309,52 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         })
     }
 
+    $scope.mark_commute_action = function (id, action) {
+        console.log(id)
+        console.log(action)
+
+        $scope.commute_type = $scope.all_commute_data[id]['commute_type']
+        $scope.commute_name = $scope.all_commute_data[id]['commute_name']
+        $scope.commute_year = $scope.all_commute_data[id]['commute_year']
+        $scope.commute_month = $scope.all_commute_data[id]['commute_month']
+        $scope.commute_day = $scope.all_commute_data[id]['commute_day']
+        $scope.commute_hour = $scope.all_commute_data[id]['commute_hour']
+        $scope.commute_minutes = $scope.all_commute_data[id]['commute_minutes']
+        $scope.commute_ampm = $scope.all_commute_data[id]['commute_ampm']
+        $scope.commute_alert = $scope.all_commute_data[id]['commute_alert']
+
+
+        var obj = JSON.stringify({
+            "commute_type": $scope.commute_type,
+            "commute_name": $scope.commute_name,
+            "commute_year": $scope.commute_year,
+            "commute_month": $scope.commute_month,
+            "commute_day": $scope.commute_day,
+            "commute_hour": $scope.commute_hour,
+            "commute_minutes": $scope.commute_minutes,
+            "commute_ampm": $scope.commute_ampm,
+            "commute_alert": $scope.commute_alert,
+            "action": action.toString(),
+        });
+        $http({
+            method: 'POST',
+            url: url + '/mark_commute_action',
+            data: obj
+        }).then(function mySuccess(response) {
+            console.log(response.data)
+            // $scope.admin_view_all_commutes()
+            $scope.get_all_commute_data()
+            // $scope.get_subscription_data()
+            // if (response.data === 'done') {
+            //     alert("Song added to the subscriptions!");
+            // } else if (response.data === 'invalid') {
+            //
+            // } else {
+            //     console.log(response.data)
+            // }
+        })
+    }
+
     $scope.user_modal_message_image = ''
 
     $scope.logout = function () {
