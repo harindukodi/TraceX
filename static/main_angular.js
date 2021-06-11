@@ -94,7 +94,7 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         }).then(function mySuccess(response) {
             console.log(response.data)
             if (response.data === 'success') {
-                location.href = 'forum_page'
+                location.href = 'user_home_page'
             } else if (response.data === 'invalid') {
                 $scope.invalid_credentials = true
             } else if (response.data === 'admin') {
@@ -173,8 +173,8 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         location.href = 'user_page'
     }
 
-    $scope.forum_page = function () {
-        location.href = 'forum_page'
+    $scope.user_home_page = function () {
+        location.href = 'user_home_page'
     }
 
     $scope.subscription_page = function () {
@@ -184,27 +184,6 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
     $scope.query_page = function () {
         location.href = 'query_page'
     }
-
-    $scope.subscription_data = ''
-    $scope.get_subscription_data = function () {
-        $http({
-            method: 'POST',
-            url: url + '/get_subscription_data',
-        }).then(function mySuccess(response) {
-            console.log(response.data)
-            var data = response.data
-
-            if (data == 'no_data') {
-
-            } else {
-                var parsed_data = JSON.parse(data)
-                $scope.subscription_data = parsed_data
-                console.log(parsed_data)
-            }
-        })
-    }
-
-    // $scope.get_subscription_data()
 
     $scope.remove_subscription_item = function (id) {
         console.log(id)

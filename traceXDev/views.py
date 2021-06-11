@@ -346,11 +346,11 @@ def download_artist_images(request):
 
 
 @csrf_exempt
-def forum_page(request):
+def user_home_page(request):
     user_id = request.session.get('user_id')
     print(user_id)
 
-    return render(request, 'forum.html',
+    return render(request, 'user_home_page.html',
                   {'user_id': user_id})
 
 
