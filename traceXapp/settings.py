@@ -25,7 +25,18 @@ SECRET_KEY = 'a4dxc4564u+=5+()#+^iu9prbq8y6i@fxlzlv%*bdg7xrlrqv#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+if DEBUG == False:
+    SECRET_KEY = ')enubw0abk7xii-b6%brhufo19hn80+7zs@p2(k-=+b4$t+!m5'
+    ALLOWED_HOSTS = ['*']
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = False
+    SECURE_SSL_REDIRECT = True
+else:
+    SECRET_KEY = ')enubw0abk7xii-b6%brhufo19hn80+7zs@p2(k-=+b4$t+!m5'
+    ALLOWED_HOSTS = ['*']
+
+# ALLOWED_HOSTS = ['*']
 
 # Application definition
 
