@@ -438,7 +438,7 @@ def connect_with_quicksight():
     # quicksight_client = session.resource('quicksight')
     # client = session.create_client("quicksight", region_name='us-east-1')
     response = quicksight_client.get_dashboard_embed_url(AwsAccountId="681989621175",
-                                                         DashboardId="48b71dea-31b7-45a4-a92a-bb682f63f0d7",
+                                                         DashboardId="2624b7cd-c80a-4bea-96ff-ea0416a64315",
                                                          IdentityType="IAM", SessionLifetimeInMinutes=100,
                                                          ResetDisabled=True,
                                                          UndoRedoDisabled=True)
