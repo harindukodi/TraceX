@@ -418,22 +418,4 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         })
     }
 
-    // $scope.embedDashboard = function () {
-    //     var dashboard;
-    //
-    //     function embedDashboard() {
-    //         var containerDiv = document.getElementById("embeddingContainer");
-    //         var options = {
-    //             // replace this dummy url with the one generated via embedding API
-    //             url: "https://us-east-1.quicksight.aws.amazon.com/embed/efbd390c0ed543979da596ec006fe7ac/dashboards/48b71dea-31b7-45a4-a92a-bb682f63f0d7?undoRedoDisabled=true&resetDisabled=true",
-    //             container: containerDiv,
-    //             scrolling: "no",
-    //             height: "700px",
-    //             width: "1000px",
-    //             footerPaddingEnabled: true
-    //         };
-    //         dashboard = QuickSightEmbedding.embedDashboard(options);
-    //     }
-    // }
-
 }])
