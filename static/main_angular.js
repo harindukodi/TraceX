@@ -388,6 +388,26 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
 
     $scope.get_all_commute_data()
 
+    $scope.get_user_commute_data = function () {
+        console.log('get_user_commute_data')
+        $http({
+            method: 'POST',
+            url: url + '/get_user_commute_data',
+        }).then(function mySuccess(response) {
+            console.log(response.data)
+            var data = response.data
+
+            if (data == 'no_data') {
+                console.log(data)
+            } else {
+                var parsed_data = JSON.parse(data)
+                $scope.all_commute_data = parsed_data
+                console.log(parsed_data)
+                $scope.query_result_table = true
+            }
+        })
+    }
+
     $scope.admin_search_commutes = function () {
         console.log('admin_search_commutes')
         location.href = 'admin_search_commutes_page'

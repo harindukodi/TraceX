@@ -177,6 +177,17 @@ def get_all_commute_data(request):
 
 
 @csrf_exempt
+def get_user_commute_data(request):
+    commute_objects = commute_table.objects.all().values()
+    df = pd.DataFrame(commute_objects)
+    print(df)
+    df = df.drop('id', 1)
+    json_converted = df.to_json(orient='records')
+    print(json_converted)
+    return JsonResponse(json_converted, safe=False)
+
+
+@csrf_exempt
 def mark_commute_action(request):
     json_converted = ''
     email_count = ''

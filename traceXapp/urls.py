@@ -18,7 +18,7 @@ from django.urls import path
 
 from traceXDev.views import render_index, registration_page, user_login_submit, admin_page, \
     admin_add_commute_page, admin_view_all_commutes_page, admin_search_commutes_page, add_commute, get_all_commute_data, \
-    mark_commute_action, register_user, user_home_page
+    mark_commute_action, register_user, user_home_page, get_user_commute_data
 
 urlpatterns = [
     path('', render_index),
@@ -33,6 +33,7 @@ urlpatterns = [
     path('add_commute', add_commute),
     path('get_all_commute_data', get_all_commute_data),
     path('mark_commute_action', mark_commute_action),
+    path('get_user_commute_data', get_user_commute_data),
     path('admin_search_commutes_page', admin_search_commutes_page),
 
     path('admin/', admin.site.urls),
