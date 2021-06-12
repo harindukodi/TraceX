@@ -217,6 +217,7 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
     $scope.message_year = ''
     $scope.message_artist = ''
     $scope.query_result_table = false
+    $scope.user_result_table = false
     $scope.query_result_empty_message = false
     $scope.queried_data = ''
 
@@ -328,16 +329,49 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
             $scope.sent_email_count = sent_email_count + ' '
             $scope.get_all_commute_data()
             $('#adminActionModal').modal('show');
-            // $scope.get_subscription_data()
-            // if (response.data === 'done') {
-            //     alert("Song added to the subscriptions!");
-            // } else if (response.data === 'invalid') {
-            //
-            // } else {
-            //     console.log(response.data)
-            // }
         })
     }
+
+    $scope.user_subscribe_commute = function (id, action) {
+        console.log(id)
+        console.log(action)
+
+        $scope.user_commute_type = $scope.all_commute_data[id]['commute_type']
+        $scope.user_commute_name = $scope.all_commute_data[id]['commute_name']
+        $scope.user_commute_year = $scope.all_commute_data[id]['commute_year']
+        $scope.user_commute_month = $scope.all_commute_data[id]['commute_month']
+        $scope.user_commute_day = $scope.all_commute_data[id]['commute_day']
+        $scope.user_commute_hour = $scope.all_commute_data[id]['commute_hour']
+        $scope.user_commute_minutes = $scope.all_commute_data[id]['commute_minutes']
+        $scope.user_commute_ampm = $scope.all_commute_data[id]['commute_ampm']
+        $scope.user_commute_alert = $scope.all_commute_data[id]['commute_alert']
+
+
+        var obj = JSON.stringify({
+            "commute_type": $scope.user_commute_type,
+            "commute_name": $scope.user_commute_name,
+            "commute_year": $scope.user_commute_year,
+            "commute_month": $scope.user_commute_month,
+            "commute_day": $scope.user_commute_day,
+            "commute_hour": $scope.user_commute_hour,
+            "commute_minutes": $scope.user_commute_minutes,
+            "commute_ampm": $scope.user_commute_ampm,
+            "commute_alert": $scope.user_commute_alert,
+            "action": action.toString(),
+        });
+        $http({
+            method: 'POST',
+            url: url + '/user_subscribe_commute',
+            data: obj
+        }).then(function mySuccess(response) {
+            console.log(response.data)
+            // var sent_email_count = response.data
+            // $scope.sent_email_count = sent_email_count + ' '
+            // $scope.get_all_commute_data()
+            $('#userActionModal').modal('show');
+        })
+    }
+
 
     $scope.user_modal_message_image = ''
 
@@ -365,6 +399,12 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         console.log('admin_view_all_commutes')
         location.href = 'admin_view_all_commutes_page'
     }
+
+    $scope.user_view_all_commutes = function () {
+        console.log('user_view_all_commutes')
+        location.href = 'user_view_all_commutes'
+    }
+
 
     $scope.get_all_commute_data = function () {
         console.log('get_all_commute_data')
@@ -397,16 +437,18 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
             console.log(response.data)
             var data = response.data
 
-            if (data == 'no_data') {
+            if (data == 'No Data') {
                 console.log(data)
             } else {
                 var parsed_data = JSON.parse(data)
-                $scope.all_commute_data = parsed_data
+                $scope.user_commute_data = parsed_data
                 console.log(parsed_data)
-                $scope.query_result_table = true
+                $scope.user_result_table = true
             }
         })
     }
+
+    $scope.get_user_commute_data()
 
     $scope.admin_search_commutes = function () {
         console.log('admin_search_commutes')

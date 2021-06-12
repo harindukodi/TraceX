@@ -80,13 +80,13 @@
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-plus"></i>
-                        <span>My Commutes</span>
+                        <span>My Commute</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" ng-click="user_home_page()" href="">View My Commutes</a>
-{#                            <a class="collapse-item" ng-click="admin_add_commute()" href="">Tram Line</a>#}
-{#                            <a class="collapse-item" ng-click="admin_add_commute()" href="">Bus Route</a>#}
+                            {#                            <a class="collapse-item" ng-click="admin_add_commute()" href="">Tram Line</a>#}
+                            {#                            <a class="collapse-item" ng-click="admin_add_commute()" href="">Bus Route</a>#}
                         </div>
                     </div>
                 </li>
@@ -237,7 +237,7 @@
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">View My Commute Details</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">View All Commute Details</h6>
                                         <div class="dropdown no-arrow">
                                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -257,14 +257,11 @@
                                     {%verbatim%}
                                     <div class="card-body" style="padding: 0">
                                         <div class="row">
-                                            <div class="col-12 d-flex justify-content-center" style="padding: 20px" ng-cloak ng-hide="user_result_table">
-                                                <h5>You have not subscribed to any commutes yet.</h5>
-                                            </div>
                                             <div class="col-12">
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-dark table-bordered table-hover dom-jQuery-events"
                                                            ng-cloak style="text-align: center;"
-                                                           ng-show="user_result_table">
+                                                           ng-show="query_result_table">
                                                         <thead class="thead-dark">
                                                         <tr>
                                                             <th>Commute Type</th>
@@ -279,7 +276,7 @@
                                                             <th>Action</th>
                                                         </tr>
                                                         </thead>
-                                                        <tr ng-repeat="data in user_commute_data track by $index">
+                                                        <tr ng-repeat="data in all_commute_data track by $index">
                                                             <td ng-if="data['commute_type'] == 'Train'">
                                                                 <h5><span class="badge badge-pill badge-primary"
                                                                           style="padding: 7px 25px;">{{data['commute_type']}}</span>
@@ -311,10 +308,10 @@
                                                                           style="padding: 7px 16px;">Unsafe</span></h5>
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-danger"
+                                                                <button class="btn btn-success"
                                                                         style="padding: 5px 25px 5px 25px; border-radius: 20px"
-                                                                        ng-click="user_unsubscribe_commute($index)">
-                                                                    Unsubscribe Commute
+                                                                        ng-click="user_subscribe_commute($index, 'subscribe')">
+                                                                    Subscribe Commute
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -374,21 +371,21 @@
         </a>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="adminActionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="userActionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Alert Status Changed!</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Successfully subscribed to the commute!</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     {%verbatim%}
-                    <div class="modal-body"> {{ sent_email_count }} emails sent to the users.</div>
+                    <div class="modal-body">You have successfully subscribed to the commute.</div>
                     {%endverbatim%}
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" data-dismiss="modal">Ok</button>
+                        <button class="btn btn-primary" type="button" ng-click="user_home_page()">Ok</button>
                         {#                        <a class="btn btn-primary" href="login.html">Logout</a>#}
                     </div>
                 </div>

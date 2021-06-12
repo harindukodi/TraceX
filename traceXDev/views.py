@@ -87,6 +87,11 @@ def query_page(request):
 
 
 @csrf_exempt
+def user_view_all_commutes(request):
+    return render(request, 'user_view_all_commutes.html')
+
+
+@csrf_exempt
 def user_login_submit(request):
     request.session['user_id'] = ''
     request.session['user_name'] = ''
@@ -178,13 +183,34 @@ def get_all_commute_data(request):
 
 @csrf_exempt
 def get_user_commute_data(request):
-    commute_objects = commute_table.objects.all().values()
-    df = pd.DataFrame(commute_objects)
-    print(df)
-    df = df.drop('id', 1)
-    json_converted = df.to_json(orient='records')
-    print(json_converted)
-    return JsonResponse(json_converted, safe=False)
+    user_commute_data = []
+    user_id = request.session.get('user_id')
+
+    if user_tracking_table.objects.filter(user_email=user_id).exists():
+        user_tracking_objects = user_tracking_table.objects.filter(user_email=user_id)
+        print(user_tracking_objects)
+        for obj in user_tracking_objects:
+            user_commute_data.append(
+                {'commute_type': obj.commute_type, 'commute_name': obj.commute_name, 'commute_year': obj.commute_year,
+                 'commute_month': obj.commute_month, 'commute_day': obj.commute_day, 'commute_hour': obj.commute_hour,
+                 'commute_minutes': obj.commute_minutes, 'commute_ampm': obj.commute_ampm,
+                 'commute_alert': obj.commute_alert})
+
+        print(user_commute_data)
+        json_data = json.dumps(user_commute_data)
+    else:
+        print('No User data')
+        json_data = 'No Data'
+
+    print(json_data)
+
+    # df = pd.DataFrame.from_records(user_tracking_objects)
+    # df = pd.DataFrame(user_tracking_objects)
+    # print(df)
+    # df = df.drop('id', 1)
+    # json_converted = df.to_json(orient='records')
+    # print(json_converted)
+    return JsonResponse(json_data, safe=False)
 
 
 @csrf_exempt
@@ -303,6 +329,74 @@ def mark_commute_action(request):
     print(user_email_list)
 
     return JsonResponse(email_count, safe=False)
+
+
+@csrf_exempt
+def user_subscribe_commute(request):
+    json_converted = ''
+    email_count = ''
+    user_email_list = []
+    user_id = request.session.get('user_id')
+
+    data_json = json.loads(request.body)
+    commute_type = data_json['commute_type']
+    commute_name = data_json['commute_name']
+    commute_year = data_json['commute_year']
+    commute_month = data_json['commute_month']
+    commute_day = data_json['commute_day']
+    commute_hour = data_json['commute_hour']
+    commute_minutes = data_json['commute_minutes']
+    commute_ampm = data_json['commute_ampm']
+    commute_alert = data_json['commute_alert']
+    action = data_json['action']
+
+    print(commute_type)
+    print(commute_year)
+    print(action)
+
+    user_tracking_obj = user_tracking_table(user_email=str(user_id),
+                                            commute_type=str(commute_type), commute_name=str(commute_name),
+                                            commute_month=str(commute_month),
+                                            commute_day=str(commute_day),
+                                            commute_year=str(commute_year),
+                                            commute_hour=str(commute_hour),
+                                            commute_minutes=str(commute_minutes),
+                                            commute_ampm=str(commute_ampm),
+                                            commute_alert=str(commute_alert),
+                                            )
+    user_tracking_obj.save()
+
+    commute_table_obj = commute_table.objects.filter(
+        commute_type=str(commute_type), commute_name=str(commute_name),
+        commute_month=str(commute_month),
+        commute_day=str(commute_day),
+        commute_year=str(commute_year),
+        commute_hour=str(commute_hour),
+        commute_minutes=str(commute_minutes),
+        commute_ampm=str(commute_ampm),
+        commute_alert=str(commute_alert))
+
+    if not commute_table_obj:
+        print('No matching commute data')
+        response = 'no_data'
+    else:
+        for obj in commute_table_obj:
+            print('Matching record')
+            print(obj.commute_passenger_count)
+            new_count = int(obj.commute_passenger_count) + 1
+            commute_table.objects.filter(
+                commute_type=str(commute_type), commute_name=str(commute_name),
+                commute_month=str(commute_month),
+                commute_day=str(commute_day),
+                commute_year=str(commute_year),
+                commute_hour=str(commute_hour),
+                commute_minutes=str(commute_minutes),
+                commute_ampm=str(commute_ampm),
+                commute_alert=str(commute_alert)).update(commute_passenger_count=str(new_count))
+
+    print('user_subscribe_commute completed')
+
+    return JsonResponse('done', safe=False)
 
 
 @csrf_exempt
