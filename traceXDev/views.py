@@ -32,6 +32,7 @@ def render_index(request):
     table_obj = test_table_new.objects.get(name='harindu')
     print(table_obj)
     table_obj_name = table_obj.name
+    # connect_with_quicksight()
     return render(request, 'index.html', {'test': table_obj_name})
 
 
@@ -422,6 +423,28 @@ def register_user(request):
         print(response.text)
 
     return JsonResponse(register_response, safe=False)
+
+
+@csrf_exempt
+def connect_with_quicksight():
+    print('connect_with_quicksight')
+    session = boto3.Session(
+        aws_access_key_id='AKIAZ5SN7YW33BSZ2MML',
+        aws_secret_access_key='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',
+        region_name='us-east-1')
+
+    # session = botocore.session.get_session()
+    quicksight_client = session.client('quicksight', region_name='us-east-1')
+    # quicksight_client = session.resource('quicksight')
+    # client = session.create_client("quicksight", region_name='us-east-1')
+    response = quicksight_client.get_dashboard_embed_url(AwsAccountId="681989621175",
+                                                         DashboardId="48b71dea-31b7-45a4-a92a-bb682f63f0d7",
+                                                         IdentityType="IAM", SessionLifetimeInMinutes=100,
+                                                         ResetDisabled=True,
+                                                         UndoRedoDisabled=True)
+    print(response)
+
+    return JsonResponse('', safe=False)
 
 
 @csrf_exempt
