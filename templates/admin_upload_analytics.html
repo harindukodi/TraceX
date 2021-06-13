@@ -34,8 +34,16 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <!-- END: Head-->
-
-<body id="page-top" onload="embedDashboard()">
+<div class="container-fluid" style="height: 100% !important;">
+    <div class="col-xl-12 col-lg-12" style="height: 100% !important;">
+        <form method="POST" class="post-form" enctype="multipart/form-data">
+            {#        {% csrf_token %}#}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+    </div>
+</div>
+<body id="page-top">
 {% block content %}
     <div ng-app="main_app" ng-controller="controller">
 
@@ -117,7 +125,8 @@
                     <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" ng-click="admin_upload_analytics()" href="">Upload Analytics Data</a>
+                            <a class="collapse-item" ng-click="admin_upload_analytics()" href="">Upload Analytics
+                                Data</a>
                         </div>
                     </div>
                 </li>
@@ -238,11 +247,7 @@
                     <!-- End of Topbar -->
 
                     <!-- Begin Page Content -->
-                    <div class="container-fluid" style="height: 100% !important;">
-                        <div class="col-xl-12 col-lg-12" style="height: 100% !important;">
-                            <div id="embeddingContainer" style="height: 100% !important;"></div>
-                        </div>
-                    </div>
+
                     <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
@@ -289,6 +294,7 @@
         </div>
     </div>
 {% endblock %}
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -323,23 +329,6 @@
 <script src="{% static 'angular/angular-touch.js' %}"></script>
 <script src="{% static 'main_angular.js' %}"></script>
 
-<script type="text/javascript">
-    var dashboard;
-
-    function embedDashboard() {
-        var containerDiv = document.getElementById("embeddingContainer");
-        var options = {
-            // replace this dummy url with the one generated via embedding API
-            url: "https://us-east-1.quicksight.aws.amazon.com/embed/3d99cf7ab6c14a308adaf42676509ba9/dashboards/2624b7cd-c80a-4bea-96ff-ea0416a64315?undoRedoDisabled=true&resetDisabled=true",
-            container: containerDiv,
-            scrolling: "no",
-            {#height: "700px",#}
-            {#width: "1000px",#}
-            footerPaddingEnabled: true
-        };
-        dashboard = QuickSightEmbedding.embedDashboard(options);
-    }
-</script>
 
 </body>
 </html>

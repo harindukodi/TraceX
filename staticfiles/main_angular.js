@@ -455,6 +455,11 @@ workbench.controller('controller', ['$scope', '$http', '$interval', '$route', '$
         location.href = 'admin_search_commutes_page'
     }
 
+    $scope.admin_upload_analytics = function () {
+        console.log('admin_upload_analytics')
+        location.href = 'admin_upload_analytics_page'
+    }
+
 
     $scope.register_user = function () {
         console.log($scope.reg_user_id)

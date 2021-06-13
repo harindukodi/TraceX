@@ -1,5 +1,6 @@
 from boto3.dynamodb.conditions import Key
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 import json
 import pandas as pd
@@ -17,6 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 from requests_aws4auth import AWS4Auth
 # from aws_requests_auth.aws_auth import AWSRequestsAuth
 from commute.models import commute_table
+from traceXDev.forms import Form
 from traceXDev.models import test_table_new
 from traceXusers.models import user_info_table
 from users.models import user_tracking_table
@@ -733,3 +735,56 @@ def subscribe_item(request):
     print(response)
 
     return JsonResponse("done", safe=False)
+
+
+@csrf_exempt
+def handle_uploaded_file(f):
+    with open('media/' + f.name, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+
+@csrf_exempt
+def admin_upload_analytics_page(request):
+    print('admin_upload_analytics_page')
+    if request.method == 'POST':
+        student = Form(request.POST, request.FILES)
+        if student.is_valid():
+            handle_uploaded_file(request.FILES['file'])
+            print(request.FILES['file'])
+            admin_upload_analytics(request, request.FILES['file'])
+            return HttpResponse("File uploaded successfuly")
+    else:
+        student = Form()
+        return render(request, 'admin_upload_analytics.html', {'form': student})
+    # return render(request, 'admin_upload_analytics.html')
+
+
+@csrf_exempt
+def admin_upload_analytics(request, name):
+    download_artist_images_response = ''
+    name_new = str(name)
+    # create_bucket('s3763840-artist-images')
+
+    session = boto3.Session(
+        aws_access_key_id='AKIAZ5SN7YW33BSZ2MML',
+        aws_secret_access_key='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',
+        region_name='us-east-1')
+    s3_client = session.client('s3')
+
+    try:
+        file_path = 'media/' + name_new
+        S3_BUCKET = 'elasticbeanstalk-us-east-1-681989621175'
+        path = 'media/'
+        key = path + name_new
+        s3_client.upload_file(file_path, S3_BUCKET, key)
+        os.remove(file_path)
+
+        download_artist_images_response = 'success'
+
+    except Exception as e:
+        download_artist_images_response = 'error'
+        print('download_artist_images exception')
+        print(e)
+
+    return JsonResponse(download_artist_images_response, safe=False)
